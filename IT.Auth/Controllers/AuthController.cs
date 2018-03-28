@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using IT.Users.Models;
+using IT.Users.BLL;
 
-namespace IT.Auth.Controllers
+namespace IT.Users.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class AuthController : Controller
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public void Get()
         {
-            return new string[] { "value1", "value2" };
+            
         }
+
+        // MM : return Auth without information about password & hash but modifing isValid 
+       
 
         // GET api/values/5
         [HttpGet("{id}")]
@@ -25,8 +29,9 @@ namespace IT.Auth.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public Auth Post([FromBody]Auth auth)
         {
+            return Authentication.GetValidation(ref auth);
         }
 
         // PUT api/values/5
