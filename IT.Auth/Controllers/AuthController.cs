@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using IT.Users.Models;
 using IT.Users.BLL;
 
@@ -29,7 +26,7 @@ namespace IT.Users.Controllers
 
         // POST api/values
         [HttpPost]
-        public Auth Post([FromBody]Auth auth)
+        public void Post([FromBody]Models.Auth auth)
         {
             return Authentication.GetValidation(ref auth);
         }

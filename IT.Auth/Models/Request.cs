@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using IT.Auth.Log.Dal;
 using System.Collections.Generic;
 
 namespace IT.Auth.Log.Models

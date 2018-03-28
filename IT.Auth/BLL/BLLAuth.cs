@@ -8,7 +8,7 @@ namespace IT.Users.BLL
 {
     public class Authentication
     {
-        public static Auth GetValidation(ref Auth auth)
+        public static Models.Auth GetValidation(ref Auth auth)
         {
             try
             {

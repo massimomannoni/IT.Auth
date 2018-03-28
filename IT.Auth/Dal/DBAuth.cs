@@ -12,7 +12,7 @@ namespace IT.Users.Dal
     public class DBAuth : DBFunctions
     {
 
-        public async Task<string> GetHashCode(Auth auth)
+        public async Task<string> GetHashCode(Models.Auth auth)
         {
             string _hash = string.Empty;
 

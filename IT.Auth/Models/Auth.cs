@@ -6,7 +6,6 @@ using IT.Users.Dal;
 
 namespace IT.Users.Models
 {
-
     public class Auth 
     {
         public string Username { get; set; }
@@ -32,7 +31,6 @@ namespace IT.Users.Models
 
             return _hashCode;
         }
-
 
     }
 
