@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using IT.Users.Dal;
 
 namespace IT.Users.Models
 {
-    public class Auth 
+    public class AuthRequest 
     {
         public string Username { get; set; }
 
@@ -14,9 +11,9 @@ namespace IT.Users.Models
 
         public bool isValid { get; set; }
 
-        public static string GetHashCode (Auth auth)
+        public static string GetHashCode (AuthRequest auth)
         {
-            DBAuth dbAuth = new DBAuth();
+            DBAuthRequest dbAuth = new DBAuthRequest();
             string _hashCode = null;
 
             try

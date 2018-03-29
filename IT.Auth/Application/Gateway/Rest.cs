@@ -1,11 +1,7 @@
-﻿using System;
-using RestSharp;
+﻿using RestSharp;
 using System.Threading.Tasks;
 using System.Threading;
-using Newtonsoft.Json;
-using IT.Users.Models;
 using IT.Auth.Log.Models;
-using System.Collections.Generic;
 
 
 namespace IT.Users
@@ -14,44 +10,59 @@ namespace IT.Users
     {
         private const string apiAuthLog = "http://172.31.224.1:2100/";
 
-        public void LogRequest(Request authRequest)
+        public static Task<int> LogRequest(AuthRequestLog authRequest)
         {
-            var client = new RestClient("http://localhost:2050/");
+            EventWaitHandle _callBack = new AutoResetEvent(false);
+
+            var _client = new RestClient(apiAuthLog);
             // client.Authenticator = new HttpBasicAuthenticator(username, password);
 
-            var request = new RestRequest("Api/Orders", Method.POST);
+            var _request = new RestRequest("Api/Request", Method.POST);
 
-            request.AddParameter("application/json", authRequest, ParameterType.RequestBody);
+            _request.AddParameter("application/json", authRequest, ParameterType.RequestBody);
 
+            _request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
 
-            // execute the request
-            IRestResponse response = client.Execute(request);
-            var content = response.Content; // raw content as string
+            var _taskSource = new TaskCompletionSource<int>();
+
+            _client.ExecuteAsync<int>(_request, response =>
+            {
+                var _count = int.Parse(response.Content.ToString());
+                _taskSource.SetResult(_count);
+
+                _callBack.Set();
+
+            });
+
+            _callBack.WaitOne();
+
+            return _taskSource.Task;
         }
 
         public static Task<int> CountRequest()
         {
-            EventWaitHandle executedCallBack = new AutoResetEvent(false);        
-            var client = new RestClient(apiAuthLog);
+            EventWaitHandle _callBack = new AutoResetEvent(false);        
+            var _client = new RestClient(apiAuthLog);
             // client.Authenticator = new HttpBasicAuthenticator(username, password);
 
-            var request = new RestRequest("Api/Request", Method.GET);
+            var _request = new RestRequest("Api/Request", Method.GET);
 
-            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
+            _request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
 
-            var tcs = new TaskCompletionSource<int>();
+            var _taskSource = new TaskCompletionSource<int>();
 
-            client.ExecuteAsync<int>(request, response =>
+            _client.ExecuteAsync<int>(_request, response =>
             {
                 var _count = int.Parse(response.Content.ToString());
-                tcs.SetResult(_count);
+                _taskSource.SetResult(_count);
 
-                executedCallBack.Set();
+                _callBack.Set();
 
             });
 
-            executedCallBack.WaitOne();
-            return tcs.Task;
+            _callBack.WaitOne();
+
+            return _taskSource.Task;
         }
     }
 }

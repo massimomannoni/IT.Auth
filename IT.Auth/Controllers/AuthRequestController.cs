@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using IT.Users.Models;
 using IT.Users.BLL;
+using IT.Auth.Log.Models;
 
 namespace IT.Users.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthController : Controller
+    public class AuthRequestController : Controller
     {
         // GET api/values
         [HttpGet]
@@ -13,9 +14,6 @@ namespace IT.Users.Controllers
         {
             
         }
-
-        // MM : return Auth without information about password & hash but modifing isValid 
-       
 
         // GET api/values/5
         [HttpGet("{id}")]
@@ -26,9 +24,11 @@ namespace IT.Users.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Models.Auth auth)
+        public AuthRequest Post([FromBody]AuthRequestLog authRequestLog)
         {
-            return Authentication.GetValidation(ref auth);
+            var _authRequest = authRequestLog.Auth;
+
+            return Authentication.GetValidation(ref _authRequest);
         }
 
         // PUT api/values/5

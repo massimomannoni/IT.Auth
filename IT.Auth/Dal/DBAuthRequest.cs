@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using IT.Users.Models;
 using System.Data.SqlClient;
@@ -9,10 +8,10 @@ using IT.Users.Constants;
 
 namespace IT.Users.Dal
 {
-    public class DBAuth : DBFunctions
+    public class DBAuthRequest : DBFunctions
     {
 
-        public async Task<string> GetHashCode(Models.Auth auth)
+        public async Task<string> GetHashCode(AuthRequest auth)
         {
             string _hash = string.Empty;
 

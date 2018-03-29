@@ -11,7 +11,7 @@
     "IIS": {
       "commandName": "IIS",
       "launchBrowser": true,
-      "launchUrl": "api/Auth",
+      "launchUrl": "api/AuthRequest",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -19,7 +19,7 @@
     "IT.Auth.Log": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/Auth",
+      "launchUrl": "api/AuthRequest",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
