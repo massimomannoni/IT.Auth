@@ -11,7 +11,7 @@ namespace IT.Users.Dal
     public class DBAuthRequest : DBFunctions
     {
 
-        public async Task<string> GetHashCode(AuthRequest auth)
+        public  async Task<string> GetHashCode(AuthRequest auth)
         {
             string _hash = string.Empty;
 

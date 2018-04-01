@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using IT.Users.Models;
 using IT.Users.BLL;
-using IT.Auth.Log.Models;
+using System.Threading.Tasks;
 
 namespace IT.Users.Controllers
 {
@@ -24,11 +24,14 @@ namespace IT.Users.Controllers
 
         // POST api/values
         [HttpPost]
-        public AuthRequest Post([FromBody]AuthRequestLog authRequestLog)
+        public async Task<AuthRequest> PostAsync([FromBody]AuthRequest authRequest)
         {
-            var _authRequest = authRequestLog.Auth;
+            if (authRequest != null)
+            {
+                authRequest = await Task.FromResult(Authentication.GetValidation(authRequest).Result);
+            }
 
-            return Authentication.GetValidation(ref _authRequest);
+            return authRequest;
         }
 
         // PUT api/values/5

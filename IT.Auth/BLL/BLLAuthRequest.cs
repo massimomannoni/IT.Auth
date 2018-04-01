@@ -8,14 +8,15 @@ namespace IT.Users.BLL
 {
     public class Authentication
     {
-        public static AuthRequest GetValidation(ref AuthRequest auth)
+        public static async Task<AuthRequest> GetValidation(AuthRequest auth)
         {
+            
             try
             {
-                var _hashCode = Task.FromResult<string>(AuthRequest.GetHashCode(auth)).Result;
+                string _hashCode =  await Task.FromResult<string>(AuthRequest.GetHashCode(auth).Result);
                 if (!string.IsNullOrEmpty(_hashCode))
                 {
-                    auth.isValid = Hash.Validate(auth.Password, _hashCode);
+                    auth.IsValid = Hash.Validate(auth.Password, _hashCode);
                 }
             }
             catch (Exception)
