@@ -28,7 +28,7 @@ namespace IT.Users.Controllers
         {
             if (authRequest != null)
             {
-                authRequest = await Task.FromResult(Authentication.GetValidation(authRequest).Result);
+                authRequest = await Task.FromResult(result: Authentication.GetValidation(authRequest).Result);
             }
 
             return authRequest;

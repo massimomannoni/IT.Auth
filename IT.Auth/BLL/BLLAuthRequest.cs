@@ -14,7 +14,7 @@ namespace IT.Users.BLL
             
             try
             {
-                KeyValuePair<long, string> idHash =  await Task.FromResult<KeyValuePair<long, string>>(AuthRequest.GetHashCode(auth).Result);
+                KeyValuePair<long, string> idHash =  await Task.FromResult(result: AuthRequest.GetHashCode(auth).Result);
                 if (idHash.Key > 0)
                 {
                     auth.IsValid = (Security.PasswordHash.Create(idHash.Key, auth.Password) == idHash.Value);

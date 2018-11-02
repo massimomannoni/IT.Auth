@@ -21,7 +21,7 @@ namespace IT.Users.Models
 
             try
             {
-                idHash = await Task.FromResult(dbAuth.GetHashCode(auth).Result);
+                idHash = await Task.FromResult(result: dbAuth.GetHashCode(auth).Result);
             }
             catch (Exception)
             {

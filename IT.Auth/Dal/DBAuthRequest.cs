@@ -23,6 +23,7 @@ namespace IT.Users.Dal
                     using (SqlCommand cmd = NewCommand(conn, "GetAuthHash", CommandType.StoredProcedure, Param("@username", auth.Username, SqlDbType.VarChar)))
                     {
                         await conn.OpenAsync();
+
                         cmd.CommandTimeout = DataBase.commandTimeout;
 
                         using (var dr = await cmd.ExecuteReaderAsync())
@@ -39,9 +40,9 @@ namespace IT.Users.Dal
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
             return idHash;
