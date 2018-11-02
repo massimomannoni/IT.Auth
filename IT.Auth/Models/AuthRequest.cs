@@ -1,25 +1,27 @@
 ﻿using System;
 using IT.Users.Dal;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace IT.Users.Models
 {
     public class AuthRequest 
     {
+
         public string Username { get; set; }
 
         public string Password { get; set; }
 
         public bool IsValid { get; set; }
 
-        public static async Task<string> GetHashCode (AuthRequest auth)
+        public static async Task<KeyValuePair<long, string>> GetHashCode (AuthRequest auth)
         {
             DBAuthRequest dbAuth = new DBAuthRequest();
-            string _hashCode = null;
+            KeyValuePair<long, string> idHash;
 
             try
             {
-                _hashCode = await Task.FromResult<string>(dbAuth.GetHashCode(auth).Result);
+                idHash = await Task.FromResult(dbAuth.GetHashCode(auth).Result);
             }
             catch (Exception)
             {
@@ -31,7 +33,7 @@ namespace IT.Users.Models
                 dbAuth = null;
             }
 
-            return _hashCode;
+            return idHash;
         }
 
     }

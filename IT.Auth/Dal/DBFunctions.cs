@@ -71,7 +71,7 @@ namespace IT.Users.Dal
 
     protected string ConnectionString
     {
-        get { return "Data Source = DESKTOP-235G98U; Initial Catalog = Ghost; Integrated Security = True"; }
+        get { return "Data Source = DESKTOP-235G98U; Initial Catalog = InfinityExchange; Integrated Security = True"; }
     }
 
     #endregion

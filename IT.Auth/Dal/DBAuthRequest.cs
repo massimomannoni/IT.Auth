@@ -4,37 +4,38 @@ using IT.Users.Models;
 using System.Data.SqlClient;
 using System.Data;
 using IT.Users.Constants;
-
+using System.Collections;
+using System.Collections.Generic;
 
 namespace IT.Users.Dal
 {
     public class DBAuthRequest : DBFunctions
     {
 
-        public  async Task<string> GetHashCode(AuthRequest auth)
+        public  async Task<KeyValuePair<long,string>> GetHashCode(AuthRequest auth)
         {
-            string _hash = string.Empty;
+            KeyValuePair<long, string> idHash;
 
             try
             {
-                using (SqlConnection _conn = NewConnection())
+                using (SqlConnection conn = NewConnection())
                 {
-                    using (SqlCommand _cmd = NewCommand(_conn, "GetAuthHash", CommandType.StoredProcedure, Param("@username", auth.Username, SqlDbType.VarChar)))
+                    using (SqlCommand cmd = NewCommand(conn, "GetAuthHash", CommandType.StoredProcedure, Param("@username", auth.Username, SqlDbType.VarChar)))
                     {
-                        await _conn.OpenAsync();
-                        _cmd.CommandTimeout = DataBase.commandTimeout;
+                        await conn.OpenAsync();
+                        cmd.CommandTimeout = DataBase.commandTimeout;
 
-                        using (var _dr = await _cmd.ExecuteReaderAsync())
+                        using (var dr = await cmd.ExecuteReaderAsync())
                         {
-                            while (await _dr.ReadAsync())
+                            while (await dr.ReadAsync())
                             {
-                                _hash = _dr["password"].ToString();                                
+                                idHash = new KeyValuePair<long, string>((long)dr["userID"], dr["password"].ToString());
                             }
 
-                            _dr.Close();
+                            dr.Close();
                         }
 
-                        _conn.Close();
+                        conn.Close();
                     }
                 }
             }
@@ -43,7 +44,7 @@ namespace IT.Users.Dal
                 throw;
             }
 
-            return _hash;
+            return idHash;
         }
 
     }

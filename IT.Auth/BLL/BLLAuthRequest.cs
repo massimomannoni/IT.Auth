@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IT.Users.Models;
 
+
 namespace IT.Users.BLL
 {
     public class Authentication
@@ -13,10 +14,10 @@ namespace IT.Users.BLL
             
             try
             {
-                string _hashCode =  await Task.FromResult<string>(AuthRequest.GetHashCode(auth).Result);
-                if (!string.IsNullOrEmpty(_hashCode))
+                KeyValuePair<long, string> idHash =  await Task.FromResult<KeyValuePair<long, string>>(AuthRequest.GetHashCode(auth).Result);
+                if (idHash.Key > 0)
                 {
-                    auth.IsValid = Hash.Validate(auth.Password, _hashCode);
+                    auth.IsValid = (Security.PasswordHash.Create(idHash.Key, auth.Password) == idHash.Value);
                 }
             }
             catch (Exception)
