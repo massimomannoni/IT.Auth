@@ -1,9 +1,8 @@
 using System;
-using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using System.Collections.Generic;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace IT.Users.Dal
 {
@@ -69,9 +68,18 @@ namespace IT.Users.Dal
       return connection;
     }
 
-    protected string ConnectionString
+    private string ConnectionString
     {
-        get { return "Data Source = DESKTOP-235G98U; Initial Catalog = InfinityExchange; Integrated Security = True"; }
+        get {
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+                var configuration = builder.Build();
+
+                return configuration.GetConnectionString("SqlServer");
+
+            }
     }
 
     #endregion

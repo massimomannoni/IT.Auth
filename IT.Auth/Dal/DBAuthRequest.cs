@@ -4,7 +4,6 @@ using IT.Users.Models;
 using System.Data.SqlClient;
 using System.Data;
 using IT.Users.Constants;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace IT.Users.Dal
